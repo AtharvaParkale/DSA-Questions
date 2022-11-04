@@ -10,22 +10,28 @@
  */
 class Solution {
 public:
+    ListNode * f(ListNode * head,ListNode * prev,ListNode* & ans){
+        
+        if(head==NULL){
+            // cout<<prev->val<<endl;
+            ans=prev;
+            return head ;
+        }
+    
+        ListNode * k=f(head->next,head,ans);
+        head->next=prev;
+        // cout<<endl;
+        return k;
+    }
+    
     ListNode* reverseList(ListNode* head) {
         
-        ListNode * temp=head;
-        ListNode * curr=head;
         ListNode * prev=NULL;
+        ListNode * ans=NULL;
         
-        while(temp!=NULL){
-            temp=temp->next;
-            curr->next=prev;
-            prev=curr;
-            curr=temp;
-        }
-        
-        head=prev;
-        
-        return head;
+        ListNode * temp=f(head,prev,ans);
+    
+        return ans;
         
     }
 };
