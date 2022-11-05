@@ -11,57 +11,55 @@
 class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-        // if(list1)
+        
         if(list1==NULL){
             return list2;
         }
-        if(list2==NULL){
+        if(list2==NULL)
+        {
             return list1;
         }
-        ListNode * newHead;
         
-        ListNode * temp1=list1;
-        ListNode * temp2=list2;
+        ListNode * l1;
+        ListNode * l2;
         
         if(list1->val<=list2->val){
-            newHead=list1;
-            temp1=temp1->next;
+            l1=list1;
+            l2=list2;
         }else{
-            newHead=list2;
-            temp2=temp2->next;
+            l1=list2;
+            l2=list1;
         }
-    
         
-        ListNode * temp3=newHead;
+        ListNode * res=l1;
+        ListNode * temp=NULL;
         
-        while(temp1!=NULL && temp2!=NULL)
-        {
-            // if(temp1==NULL || temp2val==NULL){
-            //     break;
-            // }
-            if(temp1->val<=temp2->val){
-                temp3->next=temp1;
-                temp1=temp1->next;
-                temp3=temp3->next;
-            }else{
-                temp3->next=temp2;
-                temp2=temp2->next;
-                temp3=temp3->next;
+        while(l1!=NULL){
+            
+            if(l1->val<=l2->val){
+                temp=l1;
+                l1=l1->next;
             }
+            // cout<<"Hi"<<endl;
+            
+            if(l1==NULL){
+                break;
+            }
+            
+            if(l2->val<l1->val){
+                temp->next=l2;
+                
+                ListNode * s=l1;
+                l1=l2;
+                l2=s;
+            }
+            
+            cout<<temp->val<<endl;
+            
         }
         
-        while(temp1!=NULL){
-                temp3->next=temp1;
-                temp1=temp1->next;
-                temp3=temp3->next;
-        }
+        temp->next=l2;
         
-        while(temp2!=NULL){
-                temp3->next=temp2;
-                temp2=temp2->next;
-                temp3=temp3->next;
-        }
-        
-        return newHead;
+        return res;
     }
 };
