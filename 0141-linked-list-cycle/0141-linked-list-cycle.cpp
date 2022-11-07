@@ -15,18 +15,14 @@ public:
         ListNode * ptr1=head;
         ListNode * ptr2=head->next;
         
-        while(ptr1!=NULL && ptr2!=NULL){
+        while(ptr2->next!=NULL && ptr2->next->next!=NULL){
+            
+            ptr1=ptr1->next;
+            ptr2=ptr2->next->next;
             
             if(ptr1==ptr2){
                 return true;
             }
-            
-            ptr1=ptr1->next;
-            ptr2=ptr2->next;
-            if(ptr2==NULL){
-                return false;
-            }
-            ptr2=ptr2->next;
         }
         
         return false;
