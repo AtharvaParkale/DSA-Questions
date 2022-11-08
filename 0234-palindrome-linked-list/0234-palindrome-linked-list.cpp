@@ -25,71 +25,31 @@ public:
         
         return ptr;
     }
-    
-    int len(ListNode * head){
-        
-        int x=0;
-        
-        ListNode * temp = head;
-        
-        while(temp!=NULL){
-            x++;
-            temp=temp->next;
-        }
-        
-        return x;
-    }
+
    
     bool isPalindrome(ListNode* head) {
         
-        if(head->next==NULL || head==NULL){
-            return true;
+        ListNode * slow= head;
+        ListNode * fast= head;
+        
+        while(fast->next!=NULL && fast->next->next!=NULL){
+            slow=slow->next;
+            fast=fast->next->next;
         }
         
-        ListNode * head1=head;
-        ListNode * head2;
-        ListNode * temp1;
-        ListNode * temp2;
-        ListNode * temp=head;
+        ListNode *rev=reverse(slow->next);
+        slow->next=rev;
+        slow=slow->next;
+        ListNode * dummy=head;
         
-        int l=len(head);
-        int t=1;
-
-        while(t!=l/2){
-            t++;
-            temp=temp->next;
-        }
-        
-        // cout<<temp->next->next->val;
-        
-        if(l%2==0){
-            
-            head2=temp->next;
-            temp->next=NULL;
-            
-        }else{
-            
-            head2=temp->next->next;
-            temp->next=NULL;
-            
-        }
-        
-        temp1=head1;
-        temp2=reverse(head2);
-        
-        // cout<<temp1->next->val<<endl;
-        // cout<<temp2->next->val<<endl;
-        
-        while(temp1!=NULL && temp2!=NULL){
-            if(temp1->val!=temp2->val){
+        while(slow!=NULL){
+            if(slow->val!=dummy->val){
                 return false;
             }
-            
-            temp1=temp1->next;
-            temp2=temp2->next;
+            slow=slow->next;
+            dummy=dummy->next;
         }
         
         return true;
-        
     }
 };
