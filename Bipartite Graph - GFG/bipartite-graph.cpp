@@ -6,27 +6,22 @@ using namespace std;
 class Solution {
 public:
 
-bool check(int start,int V,vector<int>adj[],int color[]){
-        queue<int> q;
-	    q.push(start);
+bool dfs(int node,int col,int color[],vector<int>adj[]){
+   
 	    
-	    
-	    color[start]=0;
-	    
-	    while(!q.empty()){
-	        int node=q.front();
-	        q.pop();
+	    color[node]=col;
 	        
-	        for( auto it:adj[node]){
+	   for( auto it:adj[node]){
 	            if(color[it]==-1){
-	                color[it] =!color[node];
-	                q.push(it);
+	                
+	                if(dfs(it,!col,color,adj)==false) return false;
+	                
 	            }
-	            else if (color[it]==color[node]){
+	            else if (color[it]==col){
 	                return false;
 	            }
 	        }
-	    }
+	    
 	    return true;
 }
 	bool isBipartite(int V, vector<int>adj[]){
@@ -36,7 +31,7 @@ bool check(int start,int V,vector<int>adj[],int color[]){
 	    
 	    for(int i=0;i<V;i++){
 	        if(color[i]==-1){
-	            if(check(i,V,adj,color)==false){
+	            if(dfs(i,0,color,adj)==false){
 	                return false;
 	            }
 	          
