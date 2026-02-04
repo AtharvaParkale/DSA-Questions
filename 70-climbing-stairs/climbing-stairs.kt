@@ -1,13 +1,15 @@
 class Solution {
     fun climbStairs(n: Int):Int{
-        val dp = MutableList(n + 1) { -1 }
 
-        dp[0] = 1
-        dp[1] = 1
+        var prev = 1
+        var prev2 = 1
+        var curr = 0
 
         for(i in 2..n){
-            dp[i] = dp[i-1] + dp[i-2]
+            curr = prev + prev2
+            prev2= prev
+            prev= curr
         }
-        return dp[n]
+        return prev
     }
 }
