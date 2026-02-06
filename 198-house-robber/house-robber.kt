@@ -1,13 +1,15 @@
 class Solution {
 
     fun rob(nums: IntArray): Int {
-        val n = nums.size
-        val dp:MutableList<Int> = MutableList<Int>(n+2){0}
+        var next1 = 0
+        var next2 = 0
 
-        for(i in n-1 downTo 0){
-            dp[i] = max(nums[i] + dp[i+2],dp[i+1] )
+        for (i in nums.size - 1 downTo 0) {
+            val curr = maxOf(nums[i] + next2, next1)
+            next2 = next1
+            next1 = curr
         }
 
-        return dp[0]
+        return next1
     }
 }
