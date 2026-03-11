@@ -1,14 +1,13 @@
 class Solution {
-    fun helper(nums:IntArray,i:Int, temp:MutableList<Int>,ans:MutableList<MutableList<Int>>){
-        if(i>=nums.size){
-            ans.add(temp)
-            return 
-        }
+    fun helper(nums: IntArray, i: Int, temp: MutableList<Int>, ans: MutableList<MutableList<Int>>) {
 
-        val dummy = temp.toMutableList()
-        temp.add(nums[i])
-        helper(nums,i+1,temp,ans)
-        helper(nums,i+1,dummy,ans)
+        ans.add(temp.toMutableList())
+
+        for (k in i until nums.size) {
+            temp.add(nums[k])
+            helper(nums, k + 1, temp, ans)
+            temp.removeLast()
+        }
     }
     fun subsets(nums: IntArray): List<List<Int>> {
         val ans:MutableList<MutableList<Int>> = mutableListOf()
