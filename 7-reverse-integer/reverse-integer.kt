@@ -1,41 +1,20 @@
 class Solution {
     fun reverse(x: Int): Int {
 
-        var n =0
-        var currNum = x
+        var num = x
+        var ans = 0
 
-        while(currNum!=0){
-            currNum = currNum/10
-            n++
+        while (num != 0) {
+
+            val digit = num % 10
+            num /= 10
+
+            // overflow check
+            if (ans > Int.MAX_VALUE / 10 || ans < Int.MIN_VALUE / 10) return 0
+
+            ans = ans * 10 + digit
         }
 
-        currNum = x
-
-        var ans :Long = 0
-        val len :Int = n
-
-        // println(n)
-
-        while(currNum!=0){
-            val lastDigit = currNum%10
-
-            if(lastDigit==0 && len==n ){
-                n--
-                currNum = currNum/10
-                continue
-            }
-
-            val base:Double = 10.0
-
-            ans = ans + lastDigit * (base.pow(n-1)).toLong()
-            n--
-            currNum = currNum/10
-        }
-
-        if(ans <=Integer.MAX_VALUE.toLong() && ans>=Integer.MIN_VALUE.toLong()){
-            return ans.toInt()
-        }
-
-        return 0
+        return ans
     }
 }
