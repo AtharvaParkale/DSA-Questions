@@ -1,26 +1,36 @@
 class Solution {
-    fun solve(s:String, p:String):Boolean{
-        if(p.length == 0){
-            return s.length == 0
+
+    lateinit var mem: Array<Array<Int>>
+
+    fun solve(i: Int, j: Int, s: String, p: String): Boolean {
+
+        if (j == p.length) return i == s.length
+
+        if (mem[i][j] != -1) return mem[i][j] == 1
+
+        var firstMatch = false
+        if (i < s.length && (s[i] == p[j] || p[j] == '.')) {
+            firstMatch = true
         }
 
-        var first_char_matched = false
+        val ans: Boolean
 
-        if(s.length>0 && ( p[0] ==s[0] || p[0] =='.')){
-            first_char_matched = true
+        if (j + 1 < p.length && p[j + 1] == '*') {
+            val notTake = solve(i, j + 2, s, p)
+            val take = firstMatch && solve(i + 1, j, s, p)
+            ans = notTake || take
+        } else {
+            ans = firstMatch && solve(i + 1, j + 1, s, p)
         }
 
-        if(p.length >= 2 && p[1] == '*'){
-            val  not_take:Boolean = solve(s,p.substring(2))
-            val take: Boolean = first_char_matched && solve(s.substring(1),p)
-
-            return not_take || take
-        }
-
-        return first_char_matched && solve(s.substring(1),p.substring(1));
+        mem[i][j] = if (ans) 1 else 0
+        return ans
     }
 
     fun isMatch(s: String, p: String): Boolean {
-        return solve(s,p)
+
+        mem = Array(s.length + 1) { Array(p.length + 1) { -1 } }
+
+        return solve(0, 0, s, p)
     }
 }
