@@ -1,23 +1,17 @@
 class Solution {
-    public boolean checkString(String s) {
-        Deque<Character> stack = new ArrayDeque<>();
+public boolean checkString(String s) {
+    boolean seenB = false;
 
-        for(int i =0;i<s.length();i++){
-            Character curr = s.charAt(i);
+    for (int i = 0; i < s.length(); i++) {
+        char curr = s.charAt(i);
 
-            if(curr=='a'){
-                if(stack.isEmpty() || stack.peek()=='a'){
-                    stack.push(curr);
-                }
-                else if(stack.peek()=='b'){
-                    return false;
-                }
-            }
-            else{
-                stack.push(curr);
-            }
+        if (curr == 'b') {
+            seenB = true;
+        } else if (seenB) {
+            return false;
         }
-
-        return true;
     }
+
+    return true;
+}
 }
